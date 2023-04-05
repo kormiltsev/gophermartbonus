@@ -11,11 +11,13 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
+// Userauth is login-password format from user.
 type Userauth struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
 }
 
+// LoginUser accepts login-password and add Bearer.
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	log.Println("loginuser")
 	ctx := r.Context()
@@ -40,9 +42,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		Pass:  passhash,
 	}
 
-	log.Println(passhash)
-
-	// exists?
+	// check exists?
 	uid, err := newusertostorage.PostgresLoginUser(ctx)
 	if err != nil {
 		log.Println("can't find user:", err)
@@ -65,12 +65,6 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// cookie := &http.Cookie{
-	// 	Name:  cook,
-	// 	Value: text,
-	// }
-	// http.SetCookie(w, cookie)
-
 	// Create a Bearer
 	var bearer = "Bearer " + text
 	w.Header().Add("Authorization", bearer)
@@ -79,6 +73,7 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// NewUser is for register new user.
 func NewUser(w http.ResponseWriter, r *http.Request) {
 	log.Println("newuser")
 	ctx := r.Context()
@@ -116,12 +111,6 @@ func NewUser(w http.ResponseWriter, r *http.Request) {
 		log.Println("can't encode:", err)
 		http.Error(w, "internal error", http.StatusInternalServerError)
 	}
-
-	// cookie := &http.Cookie{
-	// 	Name:  cook,
-	// 	Value: text,
-	// }
-	// http.SetCookie(w, cookie)
 
 	// Create a Bearer
 	var bearer = "Bearer " + text

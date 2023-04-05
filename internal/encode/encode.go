@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-// deshifu returns user id by string from cookies
+// Deshifu returns user id by string from Bearer.
 func Deshifu(a string) (int, error) {
 	key := sha256.Sum256([]byte(password))
 

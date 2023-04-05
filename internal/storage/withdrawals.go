@@ -8,9 +8,12 @@ import (
 	"time"
 )
 
-// UpdateUsers update catalog in RAM. Run when:
-// start service (with ald data) or
+// UpdateUsers update catalog in RAM. Run in case:
+//
+// start service (with old data) or
+//
 // new data from external service or
+//
 // new success withdraw
 func (r *RAM) UpdateUsers(ctx context.Context) {
 
@@ -44,7 +47,7 @@ func (r *RAM) UpdateUsers(ctx context.Context) {
 
 		new.Withdrawsum = new.Withdrawsum / 100
 		new.Sum = math.Round(new.Sum-new.Withdrawsum*100) / 100
-		// log.Printf("%d: %.0f , %.0f", new.UserID, new.Sum, new.Withdrawsum)
+
 		cat.catalog[new.UserID] = new
 	}
 	cat.mu.Unlock()
@@ -55,6 +58,7 @@ func (r *RAM) UpdateUsers(ctx context.Context) {
 	// log.Println("cat = ", cat)
 }
 
+// PostgresNewWD push new wd to postgres, returns "no money" error if not enough money.
 func (wd *Withdraw) PostgresNewWD(ctx context.Context) error {
 	us, ok := cat.catalog[wd.UserID]
 	if us.Sum-us.Withdrawsum < wd.Sum && ok {
@@ -100,7 +104,7 @@ func (wd *Withdraw) PostgresNewWD(ctx context.Context) error {
 	return nil
 }
 
-// PostgresGetWithdrawals returns list of withdrawals by user
+// PostgresGetWithdrawals returns list of withdrawals by user.
 func PostgresGetWithdrawals(ctx context.Context, uid int) ([]WithdrawList, error) {
 	var wdList = `
 	SELECT ordernumber, sum, processed_at FROM withdrawals 

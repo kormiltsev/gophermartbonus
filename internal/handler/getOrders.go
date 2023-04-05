@@ -1,4 +1,3 @@
-// Package handler is operating endpoints
 package handler
 
 import (
@@ -9,6 +8,7 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
+// GetOrders retruns all uploaded orders by user.
 func GetOrders(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()

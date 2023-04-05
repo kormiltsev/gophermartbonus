@@ -9,6 +9,7 @@ import (
 	env "github.com/caarlos0/env/v6"
 )
 
+// ServerConfigs is server settings.
 type ServerConfigs struct {
 	Port            string `env:"RUN_ADDRESS"`            // RUN_ADDRESS or -a
 	UserEndpoint    string `env:"-"`                      // /api/user
@@ -22,7 +23,7 @@ type ServerConfigs struct {
 	DBURI           string `env:"DATABASE_URI"`           // DATABASE_URI or -d
 }
 
-// UploadConfigs parse flags end ENV
+// UploadConfigs parse flags end ENV.
 func UploadConfigs() (*ServerConfigs, error) {
 	conf := ServerConfigs{
 		UserEndpoint: "/api/user",
@@ -61,7 +62,7 @@ func UploadConfigs() (*ServerConfigs, error) {
 	return &conf, nil
 }
 
-// Environment returns ENV values
+// Environment returns ENV values.
 func (c *ServerConfigs) Environment() {
 	err := env.Parse(c)
 	if err != nil {
@@ -70,7 +71,7 @@ func (c *ServerConfigs) Environment() {
 	log.Println("got from env:", c)
 }
 
-// Flags returns service parameters in case of flags
+// Flags returns service parameters in case of flags.
 func (c *ServerConfigs) Flags() {
 	// Server conf flags
 	port := flag.String("a", "localhost:8080", "service port")
@@ -84,6 +85,7 @@ func (c *ServerConfigs) Flags() {
 	c.DBURI = *storage
 }
 
+// port check for correct port data.
 func (c *ServerConfigs) port() {
 	a := strings.Split(c.Port, ":")
 	switch len(a) {

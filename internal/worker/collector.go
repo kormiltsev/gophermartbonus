@@ -8,7 +8,7 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
-// Collector collect results from queue. Push to DB results and get new tasks
+// Collector collect results from queue. Push to DB results and get new tasks.
 func (list *ListOfTasks) Collector(ctx context.Context) {
 	ticker := time.NewTicker(time.Duration(maxPeriodToStorageSec) * time.Second)
 	// log.Println("run collector")
@@ -20,6 +20,7 @@ func (list *ListOfTasks) Collector(ctx context.Context) {
 			list.chTask <- v
 		}
 	}
+	list.taskTotal = len(newtasks)
 
 	answers := make([]storage.Order, 0)
 	for {
@@ -50,7 +51,6 @@ func (list *ListOfTasks) Collector(ctx context.Context) {
 					}
 				}
 
-				// log.Println("finish postgres by limit")
 				if len(answers) != 0 {
 					answers = answers[:0]
 				}
@@ -66,7 +66,7 @@ func (list *ListOfTasks) Collector(ctx context.Context) {
 			}
 
 			if len(answers) != 0 {
-				log.Println("start postgres by timer, tasks ready =", len(answers))
+				log.Println("start postgres by timer, tasks completed =", len(answers))
 			}
 
 			// run request to PG
@@ -80,7 +80,6 @@ func (list *ListOfTasks) Collector(ctx context.Context) {
 
 			list.taskTotal += len(newtasks)
 
-			// log.Println("finish postgres by timer")
 			if len(answers) != 0 {
 				answers = answers[:0]
 			}

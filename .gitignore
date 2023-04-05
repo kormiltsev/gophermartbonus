@@ -22,4 +22,12 @@ vendor/
 .idea
 .vscode
 
+# Logs file
 *.log
+
+# Client app integration testing
+clientfilter/
+cmd/accrual/
+
+# Requirements
+SPECIFICATION.md
