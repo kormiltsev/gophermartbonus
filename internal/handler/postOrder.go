@@ -1,4 +1,3 @@
-// Package handler is operating endpoints
 package handler
 
 import (
@@ -8,15 +7,11 @@ import (
 	"strconv"
 
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
-	// "github.com/kormiltsev/gophermartbonus/internal/encode"
 	"github.com/theplant/luhn"
 )
 
+// NewOrder accepts new order by user and push to BD.
 func NewOrder(w http.ResponseWriter, r *http.Request) {
-	// if r.Header.Get("Content-Type") != "text/plain; charset=utf-8" {
-	// 	http.Error(w, "Content-Type must be 'text/plain; charset=utf-8'", http.StatusBadRequest)
-	// 	return
-	// }
 
 	ctx := r.Context()
 	uid := ctx.Value(userid).(int)
@@ -58,11 +53,11 @@ func NewOrder(w http.ResponseWriter, r *http.Request) {
 	err = neworder.PostgresNewOrder(ctx)
 	switch err {
 	case nil:
-		w.WriteHeader(202)
+		w.WriteHeader(202) // new order created
 	case storage.ErrConflictOrder:
-		w.WriteHeader(409)
+		w.WriteHeader(409) // order uploaded by other user
 	case storage.ErrConflictOrderUser:
-		w.WriteHeader(200)
+		w.WriteHeader(200) // order uploaded
 	default:
 		http.Error(w, "can't accept new order", http.StatusInternalServerError)
 	}

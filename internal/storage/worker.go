@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// UpdateRows post workers results and return new array same lenght
+// UpdateRows post workers results and return new array same lenght.
 func UpdateRows(ctx context.Context, list []Order, QtyToSend int) ([]Order, error) {
 
 	sqlStatement := `
@@ -37,17 +37,19 @@ func UpdateRows(ctx context.Context, list []Order, QtyToSend int) ([]Order, erro
 		}
 	}
 
+	log.Println("QTY To SENG ask PG ", QtyToSend)
 	rows, err := db.Query(ctx, sqlStatementreq, currentID, QtyToSend)
 	if err != nil {
-		fmt.Println("POSTGRES query error: ", err)
+		log.Println("POSTGRES query error: ", err)
 		return nil, fmt.Errorf("can't upload from DB")
 	}
 	answer := make([]Order, 0)
+
 	for rows.Next() {
 		New := Order{}
 		err := rows.Scan(&currentID, &New.Number, &New.Status)
 		if err != nil {
-			fmt.Println("POSTGRES rows.Scan error: ", err)
+			log.Println("POSTGRES rows.Scan error: ", err)
 		}
 		answer = append(answer, New)
 	}
@@ -58,5 +60,8 @@ func UpdateRows(ctx context.Context, list []Order, QtyToSend int) ([]Order, erro
 		return nil, fmt.Errorf("can't upload from DB")
 	}
 	go cat.UpdateUsers(ctx)
+
+	log.Printf("PD insert %d lines. Returns %d lines", len(list), len(answer))
+
 	return answer, nil
 }

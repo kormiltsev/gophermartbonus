@@ -9,7 +9,7 @@ import (
 	pgx "github.com/jackc/pgx/v5"
 )
 
-// PostgresNewOrder adds new order
+// PostgresNewOrder adds new order.
 func (a *Order) PostgresNewOrder(ctx context.Context) error {
 	// write to postgres
 	newOrder := `
@@ -58,7 +58,7 @@ func (a *Order) PostgresNewOrder(ctx context.Context) error {
 	return nil
 }
 
-// PostgresGetOrder returns list of orders with all status by user
+// PostgresGetOrder returns list of orders with all status by user.
 func PostgresGetOrder(ctx context.Context, uid int) ([]OrderToList, error) {
 	var ordersList = `
 	SELECT number, status, accrual, uploaded_at FROM orders 

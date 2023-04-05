@@ -14,6 +14,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// main.
 func main() {
 	ctx := context.Background()
 
@@ -22,8 +23,6 @@ func main() {
 
 	undo := zap.RedirectStdLog(blog.Logger)
 	defer undo()
-
-	// blog := logger.NewLog()
 
 	conf, err := storage.UploadConfigs()
 	if err != nil {
@@ -48,8 +47,8 @@ func main() {
 	server := &http.Server{
 		Addr:         conf.Port,
 		Handler:      http.TimeoutHandler(r, 50*time.Second, ""),
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 5 * time.Second,
+		ReadTimeout:  50 * time.Second,
+		WriteTimeout: 50 * time.Second,
 	}
 	fmt.Println(server.ListenAndServe())
 }

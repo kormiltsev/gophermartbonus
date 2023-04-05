@@ -1,3 +1,4 @@
+// package logger is for using external zap logger.
 package logger
 
 import (
@@ -7,10 +8,12 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+// Blogs is logger we used.
 type Blogs struct {
 	Logger *zap.Logger
 }
 
+// NewLog creates new logger. Using file logs.log.
 func NewLog() *Blogs {
 	rawJSON := []byte(`{
 		"level": "debug",

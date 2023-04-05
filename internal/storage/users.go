@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-// PostgresLoginUser returns user id or error if not found or wrong password
+// PostgresLoginUser returns user id or error if not found or wrong password.
 func (u *User) PostgresLoginUser(ctx context.Context) (int, error) {
 	uid := 0
 	err := db.QueryRow(ctx, "SELECT id FROM users WHERE login = $1 AND pass = $2", u.Login, u.Pass).Scan(&uid)
@@ -17,7 +17,7 @@ func (u *User) PostgresLoginUser(ctx context.Context) (int, error) {
 	return uid, nil
 }
 
-// PostgresNewUser add new user
+// PostgresNewUser add new user.
 func (u *User) PostgresNewUser(ctx context.Context) (int, error) {
 	// write to postgres
 	newOrder := `
@@ -51,7 +51,7 @@ func (u *User) PostgresNewUser(ctx context.Context) (int, error) {
 	return uid, nil
 }
 
-// InternalUser check for exists
+// InternalUser check for exists.
 func (u *User) PostgresUserID(ctx context.Context) error {
 	uid := 0
 	err := db.QueryRow(ctx, "SELECT id FROM users WHERE id = $1", u.UserID).Scan(&uid)

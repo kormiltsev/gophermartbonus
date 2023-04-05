@@ -9,7 +9,7 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
-// StartWorkers run worker and collector(1) goroutines, collects tasks and results in queue
+// StartWorkers run worker and collector(1) goroutines, collects tasks and results in queue.
 func StartWorkers(ctx context.Context, con *storage.ServerConfigs) {
 	// ctxworkers, cancel := context.WithCancel(ctx)
 	var wg sync.WaitGroup
@@ -84,7 +84,7 @@ func StartWorkers(ctx context.Context, con *storage.ServerConfigs) {
 	}
 }
 
-// clearWorckerChan change status operates or wait T/O and clear channels
+// clearWorckerChan change status operates or wait T/O and clear channels.
 func (list *ListOfTasks) clearWorckerChan(ctx context.Context, delay int) {
 	// log.Println("run waiter, delay = ", delay)
 	for {

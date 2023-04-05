@@ -1,20 +1,4 @@
-## Bonus counting service «Gophermart»
-
----
-
-### Main
-
-Service is HTTP API with next business requirements:
-
-* registration and user authorization;
-* accepts of order numbers from authorized users;
-* accounting and maintaining of order numbers list from registered user;
-* accounting of a registered user;
-* verification of order numbers using the loyalty counting system;
-* accrual reward to the user's loyalty account for each suitable order number.
-
-![image](https://pictures.s3.yandex.net:443/resources/gophermart2x_1634502166.png)
-
+/*
 Bonus counting service «Gophermart»
 Service is HTTP API with next business requirements:
 
@@ -30,9 +14,9 @@ Service is HTTP API with next business requirements:
 
   - accrual reward to the user's loyalty account for each suitable order number.
 
-## API
+# API
 
-### Sing up
+— Sing up:
 
 `POST /api/user/register`
 
@@ -52,9 +36,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### Login
+— Login:
 
 `POST /api/user/login`
 
@@ -74,9 +58,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### User upload new order number
+— User upload new order number:
 
 `POST /api/user/orders`
 
@@ -99,9 +83,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### User gets list of orders with status and balance
+— User gets list of orders with status and balance:
 
 `GET /api/user/orders`
 
@@ -138,9 +122,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### User gets current balance
+— User gets current balance:
 
 `GET /api/user/balance`
 
@@ -161,9 +145,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### User request to pay new order using bonus account
+— User request to pay new order using bonus account:
 
 `POST /api/user/balance/withdraw`
 
@@ -185,9 +169,9 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
----
+_____________________________________________________________________________________
 
-### User gets list of withdrawals approved
+— User gets list of withdrawals approved:
 
 `GET /api/user/withdrawals`
 
@@ -213,7 +197,7 @@ Service is HTTP API with next business requirements:
 
 - `500` — Internal error.
 
-## Order statuses
+# Order statuses
 
   - `REGISTERED` — registeres;
 
@@ -223,14 +207,8 @@ Service is HTTP API with next business requirements:
 
   - `PROCESSED` — order accepted, balance updated;
 
-## Revards calculation system
+# Revards calculation system
 
 Bonus counting service makes order numbers validation using third party service as client. Final stages are INVALID or PROCESSED.
-
-### Settings
-
-Database connection link (required): environment variable 'DATABASE_URI' or flag '-d'
-
-Third party service: environment variable 'ACCRUAL_SYSTEM_ADDRESS' or flag '-r'
-
-Service port (default:'localhost:8080'): environment variable 'RUN_ADDRESS' or flag '-a'
+*/
+package main

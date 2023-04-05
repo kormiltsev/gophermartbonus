@@ -8,6 +8,7 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
+// NewWithdraw accepts request, save and return 200 if balance is enough.
 func NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	uid := ctx.Value(userid).(int)
@@ -22,23 +23,21 @@ func NewWithdraw(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	// check for LUNA ?
-	// ...
-	// =====================
 
 	newWD.UserID = uid
 	err := newWD.PostgresNewWD(ctx)
 
 	switch err {
 	case nil:
-		w.WriteHeader(200)
+		w.WriteHeader(200) // approved
 	case storage.ErrNoMoneyForWithdraw:
-		w.WriteHeader(402)
+		w.WriteHeader(402) // deny
 	default:
 		http.Error(w, "can't accept new order", http.StatusInternalServerError)
 	}
 }
 
+// GetWithdrawals returns list of withdrawals.
 func GetWithdrawals(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()

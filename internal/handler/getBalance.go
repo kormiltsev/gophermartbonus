@@ -1,4 +1,3 @@
-// Package handler is operating endpoints
 package handler
 
 import (
@@ -9,6 +8,7 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
+// Balance returns actual user's balance.
 func Balance(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()
