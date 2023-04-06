@@ -9,6 +9,13 @@ import (
 )
 
 // NewWithdraw accepts request, save and return 200 if balance is enough.
+// @Tags 		Withdraw
+// @Description User send withdrawal request
+// @Accept  	json
+// @Success 	200 	{object} 	http.Response
+// @Failure 	402 	{object}  	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		api/user/balance/withdraw [post]
 func NewWithdraw(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	uid := ctx.Value(userid).(int)
@@ -38,6 +45,13 @@ func NewWithdraw(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetWithdrawals returns list of withdrawals.
+// @Tags 		Withdraw
+// @Description Returns user's list of wothdrawals
+// @Produce  	json
+// @Success 	200 	{object} 	[]storage.WithdrawList
+// @Success 	204 	{object} 	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/api/user/withdrawals [get]
 func GetWithdrawals(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()

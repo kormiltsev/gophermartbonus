@@ -110,19 +110,18 @@ Service is HTTP API with next business requirements:
 
 - `200` — List of orders in JSON
 
-	 200 OK HTTP/1.1
-	 Content-Type: application/json
-
-	[
+ 200 OK HTTP/1.1
+ Content-Type: application/json
+ [
 	 {
-		"number": "9278923470",
+		   "number": "9278923470",
 	    	"status": "PROCESSED",
 	    	"accrual": 500,
 	    	"uploaded_at": "2020-12-10T15:15:45+03:00"
 	    },
 	    {
 	    	"number": "12345678903",
-		"status": "PROCESSING",
+		   "status": "PROCESSING",
 	    	"uploaded_at": "2020-12-10T15:12:01+03:00"
 	    },
 	    {
@@ -130,7 +129,7 @@ Service is HTTP API with next business requirements:
 	    	"status": "INVALID",
 	    	"uploaded_at": "2020-12-09T16:09:53+03:00"
 	    }
-	 ]
+ ]
 
 - `204` — No orders;
 
@@ -192,20 +191,20 @@ Service is HTTP API with next business requirements:
 `GET /api/user/withdrawals`
 
 	 GET /api/user/withdrawals HTTP/1.1
-	Content-Length: 0
+	 Content-Length: 0
 
 - `200` — Success
 
-	200 OK HTTP/1.1
-	Content-Type: application/json
+ 200 OK HTTP/1.1
+ Content-Type: application/json
 
-	[
+ [
 	    {
 	        "order": "2377225624",
 	        "sum": 500,
 	        "processed_at": "2020-12-09T16:09:57+03:00"
 	    }
-	]
+ ]
 
 - `204` - Not withdrawals yet;
 
@@ -225,7 +224,7 @@ Service is HTTP API with next business requirements:
 
 ## Revards calculation system
 
-Bonus counting service makes order numbers validation using third party service as client. Final stages are INVALID or PROCESSED.
+Bonus counting service makes order numbers validation using third party service as client. Final stages are INVAID or PROCESSED.
 
 ### Settings
 

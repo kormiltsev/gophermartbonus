@@ -64,8 +64,8 @@ ________________________________________________________________________________
 
 `POST /api/user/orders`
 
-	POST /api/user/login HTTP/1.1
-	Content-Type: application/json
+	POST /api/user/orders HTTP/1.1
+	Content-Type: text/plain
 
 	12345678903
 
@@ -164,8 +164,6 @@ ________________________________________________________________________________
 - `401` — Unathorized;
 
 - `402` - Not enough money;
-
-- `422` - Wrong order number;
 
 - `500` — Internal error.
 

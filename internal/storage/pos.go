@@ -121,6 +121,9 @@ func PostgresClose() {
 
 // PostgresGetBalance returns sum of orders with status PROCCESSED and sum all withdrawals.
 func (u *User) PostgresGetBalance(ctx context.Context) error {
+	cat.mu.Lock()
+	defer cat.mu.Unlock()
+
 	us, ok := cat.catalog[u.UserID]
 	if !ok {
 		u.Sum = 0

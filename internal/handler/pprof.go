@@ -10,6 +10,9 @@ import (
 )
 
 // Profiler is a convenient subrouter used for mounting net/http/pprof.
+// @Tags 		Debug
+// @Description Profiling service
+// @Router 		/debug	[get]
 func Profiler() http.Handler {
 	r := chi.NewRouter()
 	// r.Use(NoCache)

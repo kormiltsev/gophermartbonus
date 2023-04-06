@@ -13,12 +13,12 @@ import (
 type ServerConfigs struct {
 	Port            string `env:"RUN_ADDRESS"`            // RUN_ADDRESS or -a
 	UserEndpoint    string `env:"-"`                      // /api/user
-	Register        string `env:"-"`                      // /register
-	Login           string `env:"-"`                      // /login
-	UserUpload      string `env:"-"`                      // /orders
-	Balance         string `env:"-"`                      // /balance
-	AskWithdraw     string `env:"-"`                      // /balance/withdraw
-	Withdrawals     string `env:"-"`                      // /withdrawals
+	Register        string `env:"-"`                      // ~/register
+	Login           string `env:"-"`                      // ~/login
+	UserUpload      string `env:"-"`                      // ~/orders
+	Balance         string `env:"-"`                      // ~/balance
+	AskWithdraw     string `env:"-"`                      // ~/balance/withdraw
+	Withdrawals     string `env:"-"`                      // ~/withdrawals
 	ExternalService string `env:"ACCRUAL_SYSTEM_ADDRESS"` // /api/orders/{number} ACCRUAL_SYSTEM_ADDRESS or -r
 	DBURI           string `env:"DATABASE_URI"`           // DATABASE_URI or -d
 }

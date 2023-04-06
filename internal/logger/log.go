@@ -1,4 +1,4 @@
-// package logger is for using external zap logger.
+// Here is external logger (zap).
 package logger
 
 import (

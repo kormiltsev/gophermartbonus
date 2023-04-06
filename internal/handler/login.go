@@ -18,6 +18,14 @@ type Userauth struct {
 }
 
 // LoginUser accepts login-password and add Bearer.
+// @Tags 		User
+// @Description User send login/password in JSON, stay authorized
+// @Accept  	json
+// @Header 		Authorization
+// @Success 	200 	{object} 	http.Response
+// @Failure 	401 	{object}  	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/api/user/login [post]
 func LoginUser(w http.ResponseWriter, r *http.Request) {
 	log.Println("loginuser")
 	ctx := r.Context()
@@ -74,6 +82,14 @@ func LoginUser(w http.ResponseWriter, r *http.Request) {
 }
 
 // NewUser is for register new user.
+// @Tags 		User
+// @Description New user sent login/password in JSON, stay authorized
+// @Accept  	json
+// @Header 		Authorization
+// @Success 	200 	{object} 	http.Response
+// @Failure 	409 	{object}  	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/api/user/register [post]
 func NewUser(w http.ResponseWriter, r *http.Request) {
 	log.Println("newuser")
 	ctx := r.Context()

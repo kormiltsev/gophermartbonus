@@ -11,6 +11,15 @@ import (
 )
 
 // NewOrder accepts new order by user and push to BD.
+// @Tags 		Orders
+// @Description User upload new order number
+// @Accept  	text/plain
+// @Success 	200 	{object} 	http.Response
+// @Success 	202 	{object} 	http.Response
+// @Failure 	409 	{object}  	http.Response
+// @Failure 	422 	{object}  	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/api/user/orders [post]
 func NewOrder(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()

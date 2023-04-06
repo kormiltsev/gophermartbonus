@@ -17,6 +17,12 @@ type usera string
 var userid usera
 
 // proxyHandle decode Bearer and return user id in context.
+// @Tags 		MW
+// @Description Checking user is authorized using bearer
+// @Header 		Authorization
+// @Failure 	401 	{object}  	http.Response
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/
 func Authorization(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()

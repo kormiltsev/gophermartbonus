@@ -17,6 +17,9 @@ import (
 // new success withdraw
 func (r *RAM) UpdateUsers(ctx context.Context) {
 
+	cat.mu.Lock()
+	defer cat.mu.Unlock()
+
 	var usersSum = `
 	SELECT accrual.userid, COALESCE(accruals, 0), COALESCE(withdrawals,0) FROM
     ((SELECT userid, COALESCE(SUM(accrual),0) as accruals FROM orders
@@ -36,7 +39,6 @@ func (r *RAM) UpdateUsers(ctx context.Context) {
 		log.Println("POSTGRES query sum error: ", err)
 	}
 
-	cat.mu.Lock()
 	for rows.Next() {
 
 		new := User{}
@@ -50,11 +52,12 @@ func (r *RAM) UpdateUsers(ctx context.Context) {
 
 		cat.catalog[new.UserID] = new
 	}
-	cat.mu.Unlock()
+
 	err = tx.Commit(ctx)
 	if err != nil {
 		log.Println("3: commit err: ", err)
 	}
+
 	// log.Println("cat = ", cat)
 }
 
