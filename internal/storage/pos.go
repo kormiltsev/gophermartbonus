@@ -9,26 +9,34 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+// RAM is used to get balance in memory to quick access. Updates every time of order status changed or successful withdrawal.
 type RAM struct {
 	mu      *sync.Mutex
 	catalog map[int]User
 }
 
-var db *pgxpool.Pool
+// Creating type RAM.
 var cat = RAM{
 	mu:      &sync.Mutex{},
 	catalog: make(map[int]User, 0),
 }
 
-var ErrConflictOrder = errors.New(`conflict: order already exists`)
-var ErrConflictOrderUser = errors.New(`conflict: order already uploaded`)
-var ErrConflictNewUser = errors.New(`conflict: user already exists`)
-var ErrNoMoneyForWithdraw = errors.New(`not enough money or order already exists`)
-var ErrConflictLoginUser = errors.New(`wrong login/password`)
+// Postgress DB in here.
+var db *pgxpool.Pool
 
+// Error templates.
+var (
+	ErrConflictOrder      = errors.New(`conflict: order already exists`)
+	ErrConflictOrderUser  = errors.New(`conflict: order already uploaded`)
+	ErrConflictNewUser    = errors.New(`conflict: user already exists`)
+	ErrNoMoneyForWithdraw = errors.New(`not enough money or order already exists`)
+	ErrConflictLoginUser  = errors.New(`wrong login/password`)
+)
+
+// currentID used by workers in querying.
 var currentID = 0
 
-// PostgresConnect make connection with DB or panic
+// PostgresConnect make connection with DB or panic.
 func (c *ServerConfigs) PostgresConnect(ctx context.Context) {
 	// connect to DB
 	poolConfig, err := pgxpool.ParseConfig(c.DBURI)
@@ -96,7 +104,7 @@ func (c *ServerConfigs) PostgresConnect(ctx context.Context) {
 	}
 }
 
-// PostgresPing returns TRUE if DB available
+// PostgresPing returns TRUE if DB available.
 func PostgresPing(ctx context.Context) bool {
 	_, err := db.Exec(ctx, ";")
 	if err != nil {
@@ -106,13 +114,16 @@ func PostgresPing(ctx context.Context) bool {
 	return true
 }
 
-// PostgresClose close all connections
+// PostgresClose close all connections.
 func PostgresClose() {
 	db.Close()
 }
 
-// PostgresGetBalance returns sum of orders with status PROCCESSED and sum all withdrawals
+// PostgresGetBalance returns sum of orders with status PROCCESSED and sum all withdrawals.
 func (u *User) PostgresGetBalance(ctx context.Context) error {
+	cat.mu.Lock()
+	defer cat.mu.Unlock()
+
 	us, ok := cat.catalog[u.UserID]
 	if !ok {
 		u.Sum = 0
@@ -124,7 +135,7 @@ func (u *User) PostgresGetBalance(ctx context.Context) error {
 	return nil
 }
 
-// StartMemory to keep users info im memory
+// StartMemory to keep users info im memory.
 func StartMemory(ctx context.Context) {
 	cat.UpdateUsers(ctx)
 }

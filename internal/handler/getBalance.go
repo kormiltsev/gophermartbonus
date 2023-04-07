@@ -1,4 +1,3 @@
-// Package handler is operating endpoints
 package handler
 
 import (
@@ -9,6 +8,14 @@ import (
 	"github.com/kormiltsev/gophermartbonus/internal/storage"
 )
 
+// Balance returns actual user's balance.
+// @Tags 		Balance
+// @Description Return actual user's balance
+// @Accept  	any
+// @Produce 	json
+// @Success 	200 	{object} 	storage.User
+// @Failure 	500 	{object}  	http.Response
+// @Router 		/api/user/balance [get]
 func Balance(w http.ResponseWriter, r *http.Request) {
 
 	ctx := r.Context()

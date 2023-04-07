@@ -11,7 +11,8 @@ import (
 	"time"
 )
 
-// RunWorker take task from task channel and
+// RunWorker operates handling external cervice.
+// Get new task from task channel, returns completed ones in channel, or dropped task if status not changed.
 func RunWorker(list *ListOfTasks, wg *sync.WaitGroup) {
 	defer wg.Done()
 
@@ -49,7 +50,7 @@ func RunWorker(list *ListOfTasks, wg *sync.WaitGroup) {
 					<-time.After(deadline.Sub(nowtime))
 				}
 			case task := <-list.chTask:
-				log.Println("worker: next work:->", task.Number)
+				// log.Println("worker: next work:->", task.Number)
 				adr := fmt.Sprintf("%s/api/orders/%s", list.ClientURL, task.Number)
 
 				request, err := http.NewRequest(http.MethodGet, adr, nil)
@@ -89,6 +90,7 @@ func RunWorker(list *ListOfTasks, wg *sync.WaitGroup) {
 					list.tasksReady.Add(1)
 
 					log.Println("GetEXTRA = ", task)
+
 					// skip task w/o changes in status
 					if oldStatus != task.Status {
 						list.chResult <- task

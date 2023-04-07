@@ -2,6 +2,7 @@ package storage
 
 import "time"
 
+// Order used by worker to update status.
 type Order struct {
 	UserID     int       `json:"-"`
 	Number     string    `json:"order"`
@@ -10,6 +11,7 @@ type Order struct {
 	UploadedAt time.Time `json:"-"`
 }
 
+// User used in authorization and balance counting.
 type User struct {
 	UserID      int     `json:"-"`
 	Login       string  `json:"-"`
@@ -18,6 +20,7 @@ type User struct {
 	Withdrawsum float64 `json:"withdrawn"`
 }
 
+// Withdraw is row in withdrawals.
 type Withdraw struct {
 	UserID      int       `json:"-"`
 	Order       string    `json:"order"`
@@ -25,6 +28,7 @@ type Withdraw struct {
 	ProcessedAt time.Time `json:"-"`
 }
 
+// WithdrawList is list of withdrawals by user.
 type WithdrawList struct {
 	UserID      int     `json:"-"`
 	Order       string  `json:"order"`
@@ -32,6 +36,7 @@ type WithdrawList struct {
 	ProcessedAt string  `json:"processed_at"`
 }
 
+// OrderToList used to make list of orders uploaded.
 type OrderToList struct {
 	Number     string  `json:"number"`
 	Status     string  `json:"status"`

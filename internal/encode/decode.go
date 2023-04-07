@@ -8,7 +8,7 @@ import (
 	"strconv"
 )
 
-// shifu returns cookie string by user id
+// Shifu returns Bearer string by user id.
 func Shifu(a int) (string, error) {
 	key := sha256.Sum256([]byte(password))
 
