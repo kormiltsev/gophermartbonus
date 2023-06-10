@@ -13,8 +13,6 @@ Service is HTTP API with next business requirements:
 * verification of order numbers using the loyalty counting system;
 * accrual reward to the user's loyalty account for each suitable order number.
 
-![image](https://pictures.s3.yandex.net:443/resources/gophermart2x_1634502166.png)
-
 Bonus counting service «Gophermart»
 Service is HTTP API with next business requirements:
 
